@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +8,7 @@ function App() {
     const [steps, setSteps] = useState([]);
     const [parityTable, setParityTable] = useState([]);
     const [hammingDistance, setHammingDistance] = useState(null);
+    const [errorDetails, setErrorDetails] = useState(null);
 
     const handleEncode = async () => {
         try {
@@ -17,6 +17,7 @@ function App() {
             setSteps(response.data.steps);
             setParityTable(response.data.parityTable);
             setHammingDistance(response.data.hammingDistance);
+            setErrorDetails(null);
         } catch (error) {
             console.error('Error al codificar los datos:', error);
             setResult('Error al codificar los datos');
@@ -29,6 +30,8 @@ function App() {
             setResult(response.data.decodedData);
             setSteps(response.data.steps);
             setParityTable(response.data.parityTable);
+            setErrorDetails(response.data.errorDetails);
+            setHammingDistance(null);
         } catch (error) {
             console.error('Error al decodificar los datos:', error);
             setResult('Error al decodificar los datos');
@@ -59,6 +62,23 @@ function App() {
                 <h2>Resultado</h2>
                 <p>{result}</p>
             </div>
+            {errorDetails && (
+                <div className="mb-3">
+                    <h2>Detección y Corrección de Errores</h2>
+                    <div className={`alert ${errorDetails.correctedData ? 'alert-success' : 'alert-danger'}`}>
+                        <p><strong>Posición del error:</strong> {errorDetails.position}</p>
+                        <p><strong>Datos originales:</strong> {errorDetails.originalData}</p>
+                        {errorDetails.correctedData && (
+                            <>
+                                <p><strong>Datos corregidos:</strong> {errorDetails.correctedData}</p>
+                                <p className="text-success">
+                                    <i className="bi bi-check-circle"></i> Error corregido exitosamente
+                                </p>
+                            </>
+                        )}
+                    </div>
+                </div>
+            )}
             {hammingDistance && (
                 <div className="mb-3">
                     <h2>Distancia de Hamming</h2>
