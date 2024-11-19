@@ -9,7 +9,6 @@ function App() {
     const [data, setData] = useState('');
     const [result, setResult] = useState('');
     const [parityTable, setParityTable] = useState([]);
-    const [hammingDistance, setHammingDistance] = useState(null);
     const [errorDetails, setErrorDetails] = useState(null);
     const [simulationSteps, setSimulationSteps] = useState([]);
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -19,6 +18,7 @@ function App() {
     const [hammingExamples, setHammingExamples] = useState(null);
     const [selectedExample, setSelectedExample] = useState(null);
     const [hammingAnalysis, setHammingAnalysis] = useState(null);
+    const [hammingDistance, setHammingDistance] = useState(null);
 
     useEffect(() => {
         setIsInputValid(/^[01]*$/.test(data));
@@ -224,6 +224,9 @@ function App() {
                 <div className="alert alert-success">
                     <h4>Resultado de la Codificación</h4>
                     <p>Palabra código: {result}</p>
+                    {hammingDistance && (
+                        <p>Distancia Hamming mínima: {hammingDistance}</p>
+                    )}
                 </div>
             )}
 
