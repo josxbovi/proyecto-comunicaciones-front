@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+# Simulador de Código Hamming
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyecto es un simulador interactivo del Código Hamming, una técnica de detección y corrección de errores utilizada en comunicaciones digitales.
 
-## Available Scripts
+## Descripción
 
-In the project directory, you can run:
+El simulador permite:
+- Codificar secuencias binarias usando el Código Hamming
+- Decodificar palabras código
+- Detectar y corregir errores
+- Visualizar la distancia Hamming entre secuencias
+- Simular errores de transmisión
 
-### `npm start`
+## Funcionamiento
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Codificación
+1. El usuario ingresa una secuencia binaria (0s y 1s)
+2. El sistema:
+   - Calcula los bits de paridad necesarios
+   - Posiciona los bits de datos y paridad
+   - Calcula los valores de paridad
+   - Genera la palabra código final
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Decodificación
+1. El usuario ingresa una palabra código
+2. El sistema:
+   - Verifica los bits de paridad
+   - Detecta si hay errores
+   - Corrige errores de un bit si es posible
+   - Extrae los datos originales
 
-### `npm test`
+### Análisis de Distancia Hamming
+- Muestra comparaciones entre secuencias
+- Calcula la distancia Hamming
+- Indica capacidad de detección y corrección de errores
+- Visualiza las diferencias entre secuencias
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Características Principales
 
-### `npm run build`
+### Entrada de Datos
+- Acepta secuencias binarias de cualquier longitud
+- Validación en tiempo real
+- Mínimo 4 bits requeridos
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Visualización
+- Simulación paso a paso del proceso
+- Tabla de bits de paridad
+- Comparación visual de secuencias
+- Indicadores de errores y correcciones
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Análisis
+- Cálculo de distancia Hamming
+- Ejemplos de variaciones y errores
+- Métricas de capacidad de corrección
+- Visualización de diferencias entre secuencias
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Resultados Esperados
 
-### `npm run eject`
+### En Codificación
+- Palabra código válida con bits de paridad
+- Visualización del proceso de codificación
+- Tabla de cálculos de paridad
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### En Decodificación
+- Detección de errores
+- Corrección de errores de un bit
+- Recuperación de datos originales
+- Indicación de posición del error
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### En Análisis
+- Distancia Hamming entre secuencias
+- Número de errores detectables
+- Número de errores corregibles
+- Visualización de diferencias
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Uso
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Inicie la aplicación:
+```bash
+npm start
+```
 
-## Learn More
+2. Acceda a través del navegador:
+```
+http://localhost:3000
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. Ingrese una secuencia binaria
+4. Seleccione "Codificar" o "Decodificar" según sea necesario
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. Explore los resultados y análisis
 
-### Code Splitting
+## Limitaciones
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Solo corrige errores de un bit
+- Requiere secuencias de al menos 4 bits
+- La eficiencia disminuye con secuencias muy largas
 
-### Analyzing the Bundle Size
+## Tecnologías
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- React.js
+- Bootstrap
+- JavaScript ES6+
+- CSS3
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contribución
+Si desea contribuir al proyecto:
+1. Fork el repositorio
+2. Cree una rama para su característica
+3. Commit sus cambios
+4. Push a la rama
+5. Abra un Pull Request
