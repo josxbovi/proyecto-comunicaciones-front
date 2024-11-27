@@ -60,26 +60,44 @@ export function encodeHamming(data) {
         const parityPos = Math.pow(2, i) - 1;
         const affectedPositions = [];
         let parityValue = 0;
+        let calculationSteps = [];
 
-        // Simular el cálculo de cada bit de paridad
+        // Recolectar los bits afectados y su cálculo
         for (let j = parityPos; j < totalBits; j++) {
             if (((j + 1) & (parityPos + 1)) !== 0) {
                 affectedPositions.push(j);
                 if (encodedBits[j] === 1) {
+                    calculationSteps.push(`1`);
                     parityValue ^= 1;
+                } else if (encodedBits[j] === 0) {
+                    calculationSteps.push(`0`);
                 }
             }
         }
 
         encodedBits[parityPos] = parityValue;
+
+        // Agregar paso de simulación con la fórmula y cálculo
         simulationSteps.push({
-            step: `Cálculo de paridad P${parityPos + 1}`,
-            description: `Calculando paridad para posición ${parityPos + 1}: ${parityValue}`,
+            step: `Cálculo de bit de paridad P${i + 1} (posición ${parityPos + 1})`,
+            description: `
+                Fórmula: P${i + 1} = XOR de los bits en posiciones afectadas
+                Posiciones afectadas: ${affectedPositions.map(p => p + 1).join(', ')}
+                Valores: ${calculationSteps.join(' ⊕ ')} = ${parityValue}
+                P${i + 1} = ${parityValue}
+            `,
             bits: [...encodedBits],
             highlightPositions: [parityPos, ...affectedPositions],
-            affectedBits: affectedPositions,
-            parityValue: parityValue,
-            type: 'calculation'
+            type: 'calculation',
+            formula: {
+                parityBit: i + 1,
+                position: parityPos + 1,
+                affectedBits: affectedPositions.map(p => ({
+                    position: p + 1,
+                    value: encodedBits[p]
+                })),
+                result: parityValue
+            }
         });
 
         parityTable.push({

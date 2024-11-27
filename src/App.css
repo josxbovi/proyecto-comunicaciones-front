@@ -1,34 +1,32 @@
 .bits-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
   gap: 10px;
   margin: 20px 0;
-  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .bit-cell {
-  width: 50px;
-  height: 60px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  min-width: 40px;
+  padding: 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
   position: relative;
-  background-color: #f8f9fa;
 }
 
 .bit-value {
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: bold;
 }
 
 .bit-position {
   font-size: 0.8em;
-  color: #666;
-  position: absolute;
-  bottom: 2px;
+  color: #6c757d;
+  margin-top: 5px;
 }
 
 .highlighted {
@@ -136,4 +134,44 @@ code {
 
 .formula li {
     margin-bottom: 5px;
+}
+
+.parity-calculation {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.calculation-details {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+    margin-top: 10px;
+}
+
+.calculation-details ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.calculation-details li {
+    margin: 5px 0;
+    font-family: monospace;
+}
+
+.calculation-result {
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #dee2e6;
+}
+
+.formula-box {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
 }

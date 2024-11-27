@@ -90,6 +90,9 @@ function App() {
     };
 
     const renderBitCell = (bit, index, currentStep) => {
+        // Invertir el índice para la posición
+        const displayPosition = simulationSteps[currentStepIndex]?.bits.length - index;
+        
         const isHighlighted = currentStep?.highlightPositions?.includes(index);
         const isParityBit = Math.log2(index + 1) % 1 === 0;
         
@@ -107,7 +110,7 @@ function App() {
         return (
             <div key={index} className={cellClass}>
                 <div className="bit-value">{bit !== null ? bit : '_'}</div>
-                <div className="bit-position">{index + 1}</div>
+                <div className="bit-position">{displayPosition}</div>
             </div>
         );
     };
@@ -187,15 +190,40 @@ function App() {
                         
                         {/* Visualización de bits */}
                         <div className="bits-container mb-3">
-                            {simulationSteps[currentStepIndex]?.bits.map((bit, index) => 
-                                renderBitCell(bit, index, simulationSteps[currentStepIndex])
+                            {simulationSteps[currentStepIndex]?.bits.slice().reverse().map((bit, index) => 
+                                renderBitCell(bit, simulationSteps[currentStepIndex]?.bits.length - 1 - index, simulationSteps[currentStepIndex])
                             )}
                         </div>
 
                         {/* Descripción del paso actual */}
                         <div className="step-description mb-3">
                             <h4>{simulationSteps[currentStepIndex]?.step}</h4>
-                            <p>{simulationSteps[currentStepIndex]?.description}</p>
+                            {simulationSteps[currentStepIndex]?.type === 'calculation' ? (
+                                <div className="parity-calculation">
+                                    <p className="mb-2">{simulationSteps[currentStepIndex]?.description}</p>
+                                    {simulationSteps[currentStepIndex]?.formula && (
+                                        <div className="formula-box">
+                                            <h5>Cálculo del Bit de Paridad P{simulationSteps[currentStepIndex].formula.parityBit}</h5>
+                                            <div className="calculation-details">
+                                                <p>Posición: {simulationSteps[currentStepIndex].formula.position}</p>
+                                                <p>Bits afectados:</p>
+                                                <ul>
+                                                    {simulationSteps[currentStepIndex].formula.affectedBits.map((bit, idx) => (
+                                                        <li key={idx}>
+                                                            Posición {bit.position}: {bit.value}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                                <p className="calculation-result">
+                                                    Resultado: {simulationSteps[currentStepIndex].formula.result}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <p>{simulationSteps[currentStepIndex]?.description}</p>
+                            )}
                         </div>
 
                         {/* Controles de navegación */}
