@@ -18,6 +18,7 @@ function App() {
     const [hammingExamples, setHammingExamples] = useState(null);
     const [selectedExample, setSelectedExample] = useState(null);
     const [hammingAnalysis, setHammingAnalysis] = useState(null);
+    // eslint-disable-next-line no-unused-vars
     const [hammingDistance, setHammingDistance] = useState(null);
 
     useEffect(() => {
