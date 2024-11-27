@@ -223,10 +223,28 @@ function App() {
             {result && action === 'encode' && (
                 <div className="alert alert-success">
                     <h4>Resultado de la Codificación</h4>
-                    <p>Palabra código: {result}</p>
-                    {hammingDistance && (
-                        <p>Distancia Hamming mínima: {hammingDistance}</p>
-                    )}
+                    <div className="mb-3">
+                        <p>Palabra código: {result}</p>
+                        <p>Longitud de datos (m): {data.length} bits</p>
+                        <p>Bits de paridad (r): {Math.ceil(Math.log2(data.length + Math.ceil(Math.log2(data.length)) + 1))} bits</p>
+                    </div>
+                    <div className="formula-box">
+                        <h5>Fórmula para calcular bits de paridad:</h5>
+                        <div className="formula">
+                            <p>2<sup>r</sup> ≥ m + r + 1</p>
+                            <p>Donde:</p>
+                            <ul>
+                                <li>r = número de bits de paridad</li>
+                                <li>m = número de bits de datos ({data.length})</li>
+                            </ul>
+                            <p>Desarrollo:</p>
+                            <ol>
+                                <li>2<sup>r</sup> ≥ {data.length} + r + 1</li>
+                                <li>Resolver para el menor valor de r que satisface la desigualdad</li>
+                                <li>r = {Math.ceil(Math.log2(data.length + Math.ceil(Math.log2(data.length)) + 1))} bits</li>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
             )}
 
@@ -234,6 +252,11 @@ function App() {
             {errorDetails && (
                 <div className={`alert ${errorDetails.correctedData ? 'alert-warning' : 'alert-danger'}`}>
                     <h4>Estado de la Decodificación</h4>
+                    <div className="mb-3">
+                        <p>Longitud total (n): {errorDetails.originalData.length} bits</p>
+                        <p>Bits de paridad (r): {Math.ceil(Math.log2(errorDetails.originalData.length))} bits</p>
+                        <p>Bits de datos (m): {errorDetails.originalData.length - Math.ceil(Math.log2(errorDetails.originalData.length))} bits</p>
+                    </div>
                     {errorDetails.position && (
                         <>
                             <p>Error detectado en posición: {errorDetails.position}</p>
@@ -243,6 +266,25 @@ function App() {
                             )}
                         </>
                     )}
+                    <div className="formula-box">
+                        <h5>Fórmula para verificar bits de paridad:</h5>
+                        <div className="formula">
+                            <p>Posición del error = Σ P<sub>i</sub> × 2<sup>i-1</sup></p>
+                            <p>Donde:</p>
+                            <ul>
+                                <li>P<sub>i</sub> = valor del bit de paridad i (0 o 1)</li>
+                                <li>i = posición del bit de paridad (1, 2, 4, 8, ...)</li>
+                            </ul>
+                            <p>Los bits de paridad se encuentran en las posiciones que son potencias de 2:</p>
+                            <ul>
+                                <li>P1: posición 1</li>
+                                <li>P2: posición 2</li>
+                                <li>P3: posición 4</li>
+                                <li>P4: posición 8</li>
+                                <li>...</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             )}
 
