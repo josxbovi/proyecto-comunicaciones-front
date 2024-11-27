@@ -324,10 +324,10 @@ function App() {
                         <div className="mb-3">
                             <h5>Secuencia Original Codificada</h5>
                             <div className="original-sequence">
-                                {hammingExamples.originalSequence.split('').map((bit, index) => (
+                                {hammingExamples.originalSequence.split('').reverse().map((bit, index) => (
                                     <span key={index} className="bit-display">
                                         <span className="bit">{bit}</span>
-                                        <small className="position">{index + 1}</small>
+                                        <small className="position">{hammingExamples.originalSequence.length - index}</small>
                                     </span>
                                 ))}
                             </div>

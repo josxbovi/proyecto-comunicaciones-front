@@ -37,21 +37,23 @@ export function encodeHamming(data) {
         type: 'parity'
     });
 
-    // Paso 3: Colocación de bits de datos
+    // Paso 3: Colocación de bits de datos (de derecha a izquierda)
     let dataIndex = 0;
-    for (let i = 0; i < totalBits; i++) {
+    let dataPositions = [];
+    for (let i = totalBits - 1; i >= 0; i--) {
         if (!parityPositions.includes(i)) {
             encodedBits[i] = dataBits[dataIndex];
-            simulationSteps.push({
-                step: 'Colocación de datos',
-                description: `Bit de datos ${dataBits[dataIndex]} colocado en posición ${i + 1}`,
-                bits: [...encodedBits],
-                highlightPositions: [i],
-                type: 'data'
-            });
+            dataPositions.push(i);
             dataIndex++;
         }
     }
+    simulationSteps.push({
+        step: 'Colocación de datos',
+        description: `Bits de datos colocados en posiciones: ${dataPositions.map(p => p + 1).join(', ')}`,
+        bits: [...encodedBits],
+        highlightPositions: dataPositions,
+        type: 'data'
+    });
 
     // Paso 4: Cálculo de bits de paridad
     for (let i = 0; i < r; i++) {

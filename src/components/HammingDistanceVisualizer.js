@@ -8,10 +8,10 @@ const HammingDistanceVisualizer = ({ sequence1, sequence2, distance }) => {
                 <div className="sequence-row original">
                     <div className="sequence-label">Original:</div>
                     <div className="sequence-bits">
-                        {sequence1.split('').map((bit, index) => (
+                        {sequence1.split('').reverse().map((bit, index) => (
                             <div key={index} className="bit-box">
                                 <div className="bit-value">{bit}</div>
-                                <div className="bit-position">Pos {index + 1}</div>
+                                <div className="bit-position">Pos {sequence1.length - index}</div>
                             </div>
                         ))}
                     </div>
@@ -19,8 +19,8 @@ const HammingDistanceVisualizer = ({ sequence1, sequence2, distance }) => {
                 <div className="sequence-row modified">
                     <div className="sequence-label">Modificada:</div>
                     <div className="sequence-bits">
-                        {sequence2.split('').map((bit, index) => {
-                            const isDifferent = bit !== sequence1[index];
+                        {sequence2.split('').reverse().map((bit, index) => {
+                            const isDifferent = bit !== sequence1[sequence1.length - 1 - index];
                             return (
                                 <div key={index} className={`bit-box ${isDifferent ? 'different' : ''}`}>
                                     <div className="bit-value">{bit}</div>
