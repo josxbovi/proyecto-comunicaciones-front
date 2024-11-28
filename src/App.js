@@ -90,20 +90,17 @@ function App() {
     };
 
     const renderBitCell = (bit, index, currentStep) => {
-        // Invertir el índice para la posición
-        const displayPosition = simulationSteps[currentStepIndex]?.bits.length - index;
+        const totalBits = simulationSteps[currentStepIndex]?.bits.length;
+        const displayPosition = totalBits - index; // Posición de derecha a izquierda
         
-        const isHighlighted = currentStep?.highlightPositions?.includes(index);
-        const isParityBit = Math.log2(index + 1) % 1 === 0;
+        const isHighlighted = currentStep?.highlightPositions?.includes(totalBits - displayPosition);
+        const isParityBit = Math.log2(totalBits - displayPosition + 1) % 1 === 0;
         
         let cellClass = 'bit-cell';
         if (isHighlighted) {
             cellClass += ' highlighted';
             if (currentStep.type === 'parity') cellClass += ' parity-bit';
             if (currentStep.type === 'data') cellClass += ' data-bit';
-            if (currentStep.type === 'calculation') cellClass += ' calculation';
-            if (currentStep.type === 'verification') cellClass += ' verification';
-            if (currentStep.type === 'correction') cellClass += ' correction';
         }
         if (isParityBit) cellClass += ' parity-position';
 
@@ -191,40 +188,35 @@ function App() {
                         {/* Visualización de bits */}
                         <div className="bits-container mb-3">
                             {simulationSteps[currentStepIndex]?.bits.slice().reverse().map((bit, index) => 
-                                renderBitCell(bit, simulationSteps[currentStepIndex]?.bits.length - 1 - index, simulationSteps[currentStepIndex])
+                                renderBitCell(bit, index, simulationSteps[currentStepIndex])
                             )}
                         </div>
 
                         {/* Descripción del paso actual */}
-                        <div className="step-description mb-3">
-                            <h4>{simulationSteps[currentStepIndex]?.step}</h4>
-                            {simulationSteps[currentStepIndex]?.type === 'calculation' ? (
-                                <div className="parity-calculation">
-                                    <p className="mb-2">{simulationSteps[currentStepIndex]?.description}</p>
-                                    {simulationSteps[currentStepIndex]?.formula && (
-                                        <div className="formula-box">
-                                            <h5>Cálculo del Bit de Paridad P{simulationSteps[currentStepIndex].formula.parityBit}</h5>
-                                            <div className="calculation-details">
-                                                <p>Posición: {simulationSteps[currentStepIndex].formula.position}</p>
-                                                <p>Bits afectados:</p>
-                                                <ul>
-                                                    {simulationSteps[currentStepIndex].formula.affectedBits.map((bit, idx) => (
-                                                        <li key={idx}>
-                                                            Posición {bit.position}: {bit.value}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                                <p className="calculation-result">
-                                                    Resultado: {simulationSteps[currentStepIndex].formula.result}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    )}
+                        {simulationSteps[currentStepIndex]?.type === 'init' ? (
+                            <div className="formula-box">
+                                <h5>Fórmula para calcular bits de paridad:</h5>
+                                <div className="formula">
+                                    <p>2<sup>r</sup> ≥ m + r + 1</p>
+                                    <p>Donde:</p>
+                                    <ul>
+                                        <li>r = número de bits de paridad</li>
+                                        <li>m = número de bits de datos ({data.length})</li>
+                                    </ul>
+                                    <p>Desarrollo:</p>
+                                    <ol>
+                                        <li>2<sup>r</sup> ≥ {data.length} + r + 1</li>
+                                        <li>Resolver para el menor valor de r que satisface la desigualdad</li>
+                                        <li>r = {Math.ceil(Math.log2(data.length + Math.ceil(Math.log2(data.length)) + 1))} bits</li>
+                                    </ol>
                                 </div>
-                            ) : (
+                            </div>
+                        ) : (
+                            <div className="step-description mb-3">
+                                <h4>{simulationSteps[currentStepIndex]?.step}</h4>
                                 <p>{simulationSteps[currentStepIndex]?.description}</p>
-                            )}
-                        </div>
+                            </div>
+                        )}
 
                         {/* Controles de navegación */}
                         <div className="d-flex justify-content-between">
@@ -256,23 +248,6 @@ function App() {
                         <p>Palabra código: {result}</p>
                         <p>Longitud de datos (m): {data.length} bits</p>
                         <p>Bits de paridad (r): {Math.ceil(Math.log2(data.length + Math.ceil(Math.log2(data.length)) + 1))} bits</p>
-                    </div>
-                    <div className="formula-box">
-                        <h5>Fórmula para calcular bits de paridad:</h5>
-                        <div className="formula">
-                            <p>2<sup>r</sup> ≥ m + r + 1</p>
-                            <p>Donde:</p>
-                            <ul>
-                                <li>r = número de bits de paridad</li>
-                                <li>m = número de bits de datos ({data.length})</li>
-                            </ul>
-                            <p>Desarrollo:</p>
-                            <ol>
-                                <li>2<sup>r</sup> ≥ {data.length} + r + 1</li>
-                                <li>Resolver para el menor valor de r que satisface la desigualdad</li>
-                                <li>r = {Math.ceil(Math.log2(data.length + Math.ceil(Math.log2(data.length)) + 1))} bits</li>
-                            </ol>
-                        </div>
                     </div>
                 </div>
             )}

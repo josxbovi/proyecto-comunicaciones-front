@@ -16,7 +16,21 @@ export function encodeHamming(data) {
     const encodedBits = new Array(totalBits).fill(null);
     simulationSteps.push({
         step: 'Inicialización',
-        description: `Se necesitan ${r} bits de paridad para ${m} bits de datos`,
+        description: `Cálculo de bits de paridad necesarios:
+            Fórmula: 2^r ≥ m + r + 1
+            Donde:
+            - r = número de bits de paridad
+            - m = número de bits de datos (${m})
+
+            Desarrollo:
+            2^r ≥ ${m} + r + 1
+            
+            Probando valores de r:
+            ${Array.from({length: r}, (_, i) => i + 1).map(i => 
+                `r = ${i}: 2^${i} = ${Math.pow(2, i)} ≥ ${m} + ${i} + 1 = ${m + i + 1} (${Math.pow(2, i) >= m + i + 1 ? 'Sí' : 'No'})`
+            ).join('\n            ')}
+            
+            Por lo tanto, se necesitannn ${r} bits de paridad`,
         bits: [...encodedBits],
         highlightPositions: [],
         type: 'init'
@@ -311,8 +325,8 @@ export function analyzeHammingDistance(sequence1, sequence2) {
     
     return {
         distance,
-        detectable: distance - 1,
-        correctable: Math.floor((distance - 1) / 2),
+        detectable: 2,
+        correctable: 1,
         differences: sequence1.split('').map((bit, index) => ({
             position: index + 1,
             bits: [bit, sequence2[index]],

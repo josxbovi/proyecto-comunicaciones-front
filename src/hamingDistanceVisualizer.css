@@ -179,6 +179,7 @@
     border-radius: 4px;
     text-align: center;
     min-width: 40px;
+    margin-bottom: 20px;
 }
 
 .bit-box.different {
@@ -186,9 +187,15 @@
     border-color: #ffc107;
 }
 
+.bit-position {
+    font-size: 0.8em;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
 .error-indicator {
     position: absolute;
-    bottom: -20px;
+    bottom: -25px;
     left: 50%;
     transform: translateX(-50%);
     color: #dc3545;
@@ -231,4 +238,77 @@
 .highlight {
     color: #007bff;
     font-weight: bold;
+}
+
+.formula-box {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.formula-box h5 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #0056b3;
+}
+
+.formula {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    border-left: 6px solid #007bff;
+    font-size: 1.2rem;
+}
+
+.formula p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.formula ul, .formula ol {
+    margin: 15px 0;
+    padding-left: 30px;
+}
+
+.formula li {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.formula ul li {
+    list-style-type: disc;
+}
+
+.formula ol li {
+    list-style-type: decimal;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.hamming-rules {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #e9ecef;
+}
+
+.hamming-rules p {
+    margin-bottom: 15px;
+}
+
+.hamming-rules strong {
+    color: #0056b3;
+}
+
+.hamming-rules ul {
+    margin: 15px 0;
+    padding-left: 30px;
+}
+
+.hamming-rules li {
+    margin-bottom: 12px;
+    line-height: 1.6;
 }
