@@ -16,6 +16,7 @@
   border: 1px solid #dee2e6;
   border-radius: 4px;
   position: relative;
+  margin: 5px;
 }
 
 .bit-value {
@@ -30,8 +31,7 @@
 }
 
 .highlighted {
-  border-color: #007bff;
-  background-color: #e7f1ff;
+  font-weight: bold;
 }
 
 .parity-bit {
@@ -40,8 +40,8 @@
 }
 
 .data-bit {
-  border-color: #17a2b8;
-  background-color: #d1ecf1;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
 }
 
 .calculation {
@@ -60,7 +60,8 @@
 }
 
 .parity-position {
-  border-style: dashed;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
 }
 
 .step-description {

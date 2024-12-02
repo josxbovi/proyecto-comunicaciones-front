@@ -51,23 +51,30 @@ export function encodeHamming(data) {
         type: 'parity'
     });
 
-    // Paso 3: Colocación de bits de datos (de derecha a izquierda)
+    // Paso 3: Colocación de bits de datos
     let dataIndex = 0;
     let dataPositions = [];
-    for (let i = totalBits - 1; i >= 0; i--) {
-        if (!parityPositions.includes(i)) {
+    for (let i = 0; i < totalBits; i++) {
+        // Verificar si la posición actual NO es un bit de paridad (no es potencia de 2)
+        if (!isPowerOfTwo(i + 1)) {
             encodedBits[i] = dataBits[dataIndex];
             dataPositions.push(i);
             dataIndex++;
         }
     }
+
     simulationSteps.push({
         step: 'Colocación de datos',
-        description: `Bits de datos colocados en posiciones: ${dataPositions.map(p => p + 1).join(', ')}`,
+        description: `Bits de datos colocados en posiciones que no son potencia de 2`,
         bits: [...encodedBits],
         highlightPositions: dataPositions,
         type: 'data'
     });
+
+    // Función auxiliar para verificar si un número es potencia de 2
+    function isPowerOfTwo(n) {
+        return Math.log2(n) % 1 === 0;
+    }
 
     // Paso 4: Cálculo de bits de paridad
     for (let i = 0; i < r; i++) {

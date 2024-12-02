@@ -5,6 +5,11 @@ import './App.css'; // Asegúrate de crear este archivo para los estilos
 import HammingDistanceVisualizer from './components/HammingDistanceVisualizer';
 import { generateHammingExamples, analyzeHammingDistance } from './hammingCode';
 
+// Función auxiliar para verificar si un número es potencia de 2
+function isPowerOfTwo(n) {
+    return Math.log2(n) % 1 === 0;
+}
+
 function App() {
     const [data, setData] = useState('');
     const [result, setResult] = useState('');
@@ -91,23 +96,32 @@ function App() {
 
     const renderBitCell = (bit, index, currentStep) => {
         const totalBits = simulationSteps[currentStepIndex]?.bits.length;
-        const displayPosition = totalBits - index; // Posición de derecha a izquierda
+        const position = totalBits - index;  // posición real en el código Hamming
         
-        const isHighlighted = currentStep?.highlightPositions?.includes(totalBits - displayPosition);
-        const isParityBit = Math.log2(totalBits - displayPosition + 1) % 1 === 0;
+        // Un bit es de paridad si su posición es potencia de 2
+        const isParityPosition = isPowerOfTwo(position);
         
         let cellClass = 'bit-cell';
-        if (isHighlighted) {
-            cellClass += ' highlighted';
-            if (currentStep.type === 'parity') cellClass += ' parity-bit';
-            if (currentStep.type === 'data') cellClass += ' data-bit';
+        
+        // Solo resaltar en verde si:
+        // 1. Está en highlightPositions
+        // 2. Es paso de colocación de datos (type === 'data')
+        // 3. NO es posición de paridad
+        if (currentStep?.highlightPositions?.includes(totalBits - position) && 
+            currentStep.type === 'data' && 
+            !isParityPosition) {
+            cellClass += ' highlighted data-bit';
         }
-        if (isParityBit) cellClass += ' parity-position';
+        
+        // Marcar las posiciones de paridad
+        if (isParityPosition) {
+            cellClass += ' parity-position';
+        }
 
         return (
             <div key={index} className={cellClass}>
                 <div className="bit-value">{bit !== null ? bit : '_'}</div>
-                <div className="bit-position">{displayPosition}</div>
+                <div className="bit-position">{position}</div>
             </div>
         );
     };
